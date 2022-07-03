@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quote Generator</title>
+</head>
+<style>
+body {
+    background:#D0D6B5;
+    text-align: center;
+    color:#242022;
+    margin: auto;
+    font-family: "Oslo", sans-serif;
+}
+#center {
+    margin: auto;
+    width:70%;
+    margin-top: 10%;
+    text-align: center;
+}
+#clunker {
+    cursor: pointer;
+    width: fit-content;
+    border-radius: 50px;
+    margin: auto;
+    background-color: #EE7674;
+    text-align: center;
+}
+
+#clunker:hover {
+    background-color: #c46b63;
+}
+
+#clunker p {
+    user-select: none;
+    pointer-events: none;
+    font-size: 20px;
+    padding: 0.5em;
+} 
+</style>
+
+<body>
+    <h1>Default Server Quotes Generator</h1>
+    <div id="center">
+        <h2 id="overwrite">Generated Quotes will appear here</h2>
+        <div id="clunker" onclick="post()"><p>Generate</p></div>
+    </div>
+    <script>
+        var button = document.getElementById("clunker");
+        var token = "Bearer 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"
+
+        function post() {
+            fetch("https://api.openai.com/v1/completions",{
+                method: "POST",
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  "Content-Type": "application/json",
+                  "authorization": token
+                },
+                body: JSON.stringify(
+                    {
+                        "model": "davinci:ft-personal-2022-07-03-13-32-33",
+                        "prompt": "",
+                        "max_tokens": 100,
+                        "temperature": 0.59,
+                        "top_p": 1,
+                        "n": 1,
+                        "stream": false,
+                        "logprobs": null,
+                        "stop": ["  ", "2021", "2022", "\n"]
+                    }
+                )
+              }
+              )
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                var text = data.choices[0].text;
+                text.replace("(", "");
+                text.replace(")", "");
+                document.getElementById("overwrite").innerText = text;
+              })}
+    </script>
+    
+</body>
+</html>
