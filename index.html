@@ -48,7 +48,7 @@ body {
     </div>
     <script>
         var button = document.getElementById("clunker");
-        var token = "Bearer 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"
+        var token = ""
 
         function post() {
             fetch("https://api.openai.com/v1/completions",{
@@ -77,9 +77,8 @@ body {
               .then(data => {
                 console.log(data);
                 var text = data.choices[0].text;
-                text.replace("(", "");
-                text.replace(")", "");
-                document.getElementById("overwrite").innerText = text;
+                if (text.includes("-")) {document.getElementById("overwrite").innerText = text;}
+                else {document.getElementById("overwrite").innerText = "Bot did not produce a quote, please try again.";}
               })}
     </script>
     
