@@ -48,7 +48,7 @@ body {
     </div>
     <script>
         var button = document.getElementById("clunker");
-        var token = ""
+        var token = process.env.TOKEN;
 
         function post() {
             fetch("https://api.openai.com/v1/completions",{
