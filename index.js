@@ -1,7 +1,7 @@
 const express = require('express'); 
 const app = express();              
 const port = 5000;   
-
+require('dotenv').config();
 
 app.get('/', (req, res) => {
     res.sendFile('index.html', {root: __dirname});

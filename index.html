@@ -37,7 +37,12 @@ body {
     pointer-events: none;
     font-size: 20px;
     padding: 0.5em;
-} 
+}
+input {
+    margin-top: 3em;
+    border: 5px;
+    outline: none;
+}
 </style>
 
 <body>
@@ -46,17 +51,17 @@ body {
         <h2 id="overwrite">Generated Quotes will appear here</h2>
         <div id="clunker" onclick="post()"><p>Generate</p></div>
     </div>
+    key: <input type="password" id="key">
     <script>
         var button = document.getElementById("clunker");
-        var token = process.env['API_TOKEN'];
-
+        var keybox = document.getElementById("key");
         function post() {
             fetch("https://api.openai.com/v1/completions",{
                 method: "POST",
                 headers: {
                   'Access-Control-Allow-Origin': '*',
                   "Content-Type": "application/json",
-                  "authorization": token
+                  "authorization": "Bearer " + keybox.value
                 },
                 body: JSON.stringify(
                     {
